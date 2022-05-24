@@ -30,8 +30,9 @@
 		<section class="section">
 			<div class="container">
 				<h1 class="title">Simpson API</h1>
-
-				<div class="content" id="chuck-norris"></div>
+        <button><a href="/">Randomize</a></button>
+        <!-- Ok j'ai triché pour le bouton mais je suis en php un peu de compréhension svp -->
+				<div class="content" id="simpsonQuote"></div>
 			</div>
 		</section>
 
@@ -41,6 +42,27 @@
 			integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs="
 			crossorigin="anonymous"
 		></script>
-		<script></script>
+		<script>
+
+    function fetchSimpsonQuotesJSON() {
+      const url = `https://simpsons-quotes-api.herokuapp.com/quotes`;
+      axios.get(url)
+        .then(function(response){
+          return response.data['0'];
+        })
+        .then(function(simpsonQuote){
+          console.log('data decoded from JSON:', simpsonQuote);
+          const simpsonQuoteHtml = `
+            <p><strong>${simpsonQuote.character}</strong></p>
+            <p>${simpsonQuote.quote}</p>
+            <img src="${simpsonQuote.image}" />
+          `;
+          document.querySelector('#simpsonQuote').innerHTML = simpsonQuoteHtml;
+        });
+    }
+
+    fetchSimpsonQuotesJSON();
+  
+    </script>
 	</body>
 </html>
